@@ -41,13 +41,9 @@ TARGET_OUTLOOK_FOLDERS = ["Code Blue", "Prove Support", "PMASS", "Zabbix alerts"
 
 
 # 🛑 ATLASSIAN SECURE CREDENTIALS 🛑
-ATLASSIAN_EMAIL = "suryakant.patil@transunion.com"
+ATLASSIAN_EMAIL = os.getenv("ATLASSIAN_EMAIL","")
 ATLASSIAN_API_TOKEN = os.getenv("ATLASSIAN_TOKEN","")
-ATLASSIAN_TOKEN_EXPIRY = "2026-10-30"
-print(
-    "ATLASSIAN TOKEN FOUND:",
-    bool(ATLASSIAN_API_TOKEN)
-)
+ATLASSIAN_TOKEN_EXPIRY = os.getenv("ATLASSIAN_TOKEN_EXPIRY","")
 
 # 🛑 TEAMS WEBHOOK 🛑
 # Paste the Incoming Webhook URL generated from your Teams Channel here
