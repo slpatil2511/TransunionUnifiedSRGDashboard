@@ -9,6 +9,13 @@ try:
     from requests_negotiate_sspi import HttpNegotiateAuth
 except ImportError:
     HttpNegotiateAuth = None
+try:
+    import win32com.client
+    import pythoncom
+    OUTLOOK_AVAILABLE = True
+except ImportError:
+    OUTLOOK_AVAILABLE = False	
+		
 import urllib.request
 import os
 import socket
@@ -16,8 +23,6 @@ import requests.packages.urllib3.util.connection as urllib3_cn
 import time
 import base64
 import pandas as pd
-import win32com.client
-import pythoncom
 import concurrent.futures
 import re
 import threading
@@ -301,6 +306,11 @@ def get_dba_issues():
     return display_issues
 
 def fetch_outlook_background():
+
+    if not OUTLOOK_AVAILABLE:
+        print("Outlook not available - skipping email processing")
+        return {}
+
     email_data = {}
     try:
         pythoncom.CoInitialize()
