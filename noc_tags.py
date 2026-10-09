@@ -12,7 +12,6 @@ import requests
 import re
 import threading
 from plyer import notification
-import winsound
 import pandas as pd
 from bs4 import BeautifulSoup
 from streamlit.runtime.scriptrunner import add_script_run_ctx
