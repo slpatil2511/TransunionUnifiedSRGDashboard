@@ -5,7 +5,7 @@ metadata:
   name: transunion-dashboard
 
 spec:
-  replicas: 1
+  replicas: 6
 
   selector:
     matchLabels:
