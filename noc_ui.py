@@ -637,12 +637,17 @@ def run_dashboard():
         st.session_state.first_load_done = True
         st.session_state.is_fetching = False
 
-        if 'smartit_launched' not in st.session_state:
+        import platform
 
+        if (
+            platform.system() == "Windows"
+            and 'smartit_launched' not in st.session_state
+        ):
+        
             import subprocess
-
+        
             EDGE_PATH = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-
+        
             subprocess.Popen([
                 EDGE_PATH,
                 "--remote-debugging-port=9222",
@@ -650,7 +655,7 @@ def run_dashboard():
                 "--new-window",
                 "https://transunion-smartit.onbmc.com"
             ])
-
+        
             st.session_state.smartit_launched = True
 
     if "node" in st.query_params:
