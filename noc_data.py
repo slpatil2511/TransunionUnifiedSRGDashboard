@@ -5,7 +5,10 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 import urllib3
-from requests_negotiate_sspi import HttpNegotiateAuth
+try:
+    from requests_negotiate_sspi import HttpNegotiateAuth
+except ImportError:
+    HttpNegotiateAuth = None
 import urllib.request
 import os
 import socket
@@ -35,12 +38,30 @@ os.environ['NO_PROXY'] = '*'
 os.environ['no_proxy'] = '*'
 
 def fast_robust_fetch(url, state_key, is_json=False, is_dba=False):
-    combos = [
-        {"proxies": urllib.request.getproxies(), "auth": HttpNegotiateAuth()}, 
-        {"proxies": {"http": None, "https": None}, "auth": HttpNegotiateAuth()},
-        {"proxies": urllib.request.getproxies(), "auth": None},
-        {"proxies": {"http": None, "https": None}, "auth": None}
-    ]
+    combos = []
+
+    if HttpNegotiateAuth:
+        combos.extend([
+            {
+                "proxies": urllib.request.getproxies(),
+                "auth": HttpNegotiateAuth()
+            },
+            {
+                "proxies": {"http": None, "https": None},
+                "auth": HttpNegotiateAuth()
+            }
+        ])
+
+    combos.extend([
+        {
+            "proxies": urllib.request.getproxies(),
+            "auth": None
+        },
+        {
+            "proxies": {"http": None, "https": None},
+            "auth": None
+        }
+    ])
     
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
@@ -464,6 +485,10 @@ def fetch_confluence_secure(page_id):
     proxies = urllib.request.getproxies()
     try:
         resp = requests.get(url, headers=headers, proxies=proxies, verify=False, timeout=10)
+       
+        if resp.status_code != 200:
+            print("RESPONSE:")
+            print(resp.text[:1000])
         if resp.status_code == 200:
             html_content = resp.json().get("body", {}).get("view", {}).get("value", "")
             if html_content:
