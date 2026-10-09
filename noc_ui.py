@@ -15,7 +15,10 @@ import requests
 import re
 import threading
 from plyer import notification
-import winsound
+try:
+    import winsound
+except ImportError:
+    winsound = None
 import pandas as pd
 from bs4 import BeautifulSoup
 from streamlit.runtime.scriptrunner import add_script_run_ctx
@@ -392,7 +395,8 @@ def live_dashboard_fragment(sound_enabled):
             try:
                 notification.notify(title="🚨 New Alert Received", message=summary_text, app_name="Unified NOC Dashboard", timeout=10)
                 for _ in range(3):
-                    winsound.Beep(800, 300)
+                    if winsound:
+                        winsound.Beep(800, 300)
                     time.sleep(0.1)
             except Exception as e:
                 print(f"Notification failed: {e}")
