@@ -1,0 +1,21 @@
+1. Prerequisites
+Before running the script, ensure you have the following:
+
+Python Installed: You must have Python installed on your Windows machine (Python 3.11.0).
+Cisco VPN Connected: You must be actively connected to your corporate Cisco VPN, as this script queries internal TransUnion servers.
+The Image Files: Ensure you have saved the supporting image files in .jpg (or .png)format in the exact same folder where your Python scripts are saved.
+
+📦 2. Required Packages
+The script relies on some external Python libraries:
+Please run AutoUpdating.bat file it will look for python pakages and will start installing them, this process will take some time.
+once all packages are installed our Unified SRG Dashboard will open up in the browser.
+
+🚀 3. Command to mannualy Run the Script
+If you do not wish to run this code using bat file everytime, please copy all the files shared with you on onedrive and paste onto your local folders
+Navigate to the folder where you have saved all the files and run this below command:
+
+python -m streamlit run app.py
+
+Note: 
+1. Ensure your outlook folder names are same as the folders shown on the dashboard.
+2. Please create your confluence token and replace it with the token under config.py file.
