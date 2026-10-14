@@ -9,13 +9,6 @@ try:
     from requests_negotiate_sspi import HttpNegotiateAuth
 except ImportError:
     HttpNegotiateAuth = None
-try:
-    import win32com.client
-    import pythoncom
-    OUTLOOK_AVAILABLE = True
-except ImportError:
-    OUTLOOK_AVAILABLE = False	
-		
 import urllib.request
 import os
 import socket
@@ -23,6 +16,8 @@ import requests.packages.urllib3.util.connection as urllib3_cn
 import time
 import base64
 import pandas as pd
+import win32com.client
+import pythoncom
 import concurrent.futures
 import re
 import threading
@@ -34,7 +29,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
-ENABLE_AUTO_READ = False
+ENABLE_AUTO_READ = True
 
 def allowed_gai_family(): return socket.AF_INET
 urllib3_cn.allowed_gai_family = allowed_gai_family
@@ -306,11 +301,6 @@ def get_dba_issues():
     return display_issues
 
 def fetch_outlook_background():
-
-    if not OUTLOOK_AVAILABLE:
-        print("Outlook not available - skipping email processing")
-        return {}
-
     email_data = {}
     try:
         pythoncom.CoInitialize()
@@ -696,20 +686,20 @@ def get_crisis_connect_data():
             "SRG BobNet", "SRG Batch", "SRG Data", "SRG Infra", "SRG Lego", 
             "SRG QA", "SRG Database", "SRG Eternals", "SRG Mutants", "SRG Defenders", 
             "SRG Reporting", "SRG Avengers", "SRG Guardians", "SRG Prefill", "SRG OpsExcel", 
-            "SRG Devops Support"
+            "SRG Devops Support", "SRG NOC Support"
         ],
         "Crisis Connect Group Names": [
             "SRG BobNet On-Call", "SRG Batch On-Call", "SRG Data On-Call", "SRG Infra On-Call", 
             "SRG Lego On-Call", "SRG QA On-Call", "SRG Database On-Call", "SRG Eternals On-Call", 
             "SRG Mutants On-Call", "SRG Defenders On-Call", "SRG Reporting On-Call", "SRG Avengers On-Call", 
             "SRG Guardians On-Call", "SRG Prefill On-Call", "SRG OpsExcel On-Call", 
-            "SRG Devops Support On-Call"
+            "SRG Devops Support On-Call", "SRG NOC Support On-Call"
         ],
         "Group Admin Names": [
             "Tsybulski, Dmitry", "Sahu, Vivek", "Gollapudi, Sreelatha", "Vitthalingalkar, Pavan", 
             "Chauhan, Nitisha", "Tonge, Nikhil", "Gupta, Nikita", "Rajput, Jitendra", "Thorat, Gautam", 
             "K, Narasimha", "PradipShete, Manoj", "Karden, Jacob", "Karden, Jacob", "Kore, Ravindra", 
-            "Madhumitha, kotturi", "DevOps Admin"
+            "Madhumitha, kotturi", "DevOps Admin", "NOC Admin"
         ]
     })
 

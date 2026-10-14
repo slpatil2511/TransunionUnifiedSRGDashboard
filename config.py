@@ -38,11 +38,9 @@ URLS_DBA_FRONTEND = [
 # 🛑 Outlook Folders 🛑
 TARGET_OUTLOOK_FOLDERS = ["Code Blue", "Prove Support", "PMASS", "Zabbix alerts", "Remedy SRG"]
 
-
-
 # 🛑 ATLASSIAN SECURE CREDENTIALS 🛑
 ATLASSIAN_EMAIL = os.getenv("ATLASSIAN_EMAIL","")
-ATLASSIAN_API_TOKEN = os.getenv("ATLASSIAN_TOKEN","")
+ATLASSIAN_API_TOKEN = os.getenv("ATLASSIAN_API_TOKEN","")
 ATLASSIAN_TOKEN_EXPIRY = os.getenv("ATLASSIAN_TOKEN_EXPIRY","")
 
 # 🛑 TEAMS WEBHOOK 🛑
@@ -57,14 +55,18 @@ CONFLUENCE_DEVOPS_API = "https://transunion.atlassian.net/wiki/rest/api/content/
 #TEAMS_CHANNEL_ID = "19%3A029486ac57cf4c5490f04bdff4c736e6%40thread.tacv2"
 TEAMS_CHANNEL_ID = "19%3A6c3b53-9WPg9sxkYvZL30FoEsVm5QxRECWxOw0vijBo1%40thread.tacv2"
 
-# 🛑 PMASS Excel Mapping 🛑
-# Using 'r' before the string ensures Windows backslashes are read correctly
-#PMASS_EXCEL_PATH = r"C:\Users\slpatil\OneDrive - TransUnion LLC\NOC_Dashboard_Master\GCP-Inventory-Teams-April28 1.xlsx"
-
-# 🛑 REMEDY PAGING SYSTEM 🛑
-REMEDY_PAGING_URL = "https://transunion-smartit.onbmc.com/smartit/app/#/incidentPV/IDGE6M80C0ZJHAT9OZO5T9OZO5FQY9"
-
 # 🔴 AI AGENT CONFIGURATION 🔴
-# Example URL from the doc: "https://onetru-genai-llmops-api-demo-cl1.ipaas.neustar.com"
-AURA_API_KEY = "paste-your-onetru-key-here"
-AURA_BASE_URL = "https://genai-fdev-indmns1.ipaas.neustar.com/api/v2/chat"
+AURA_API_KEY = os.getenv("AURA_API_KEY","")
+AURA_BASE_URL = os.getenv("AURA_BASE_URL","")
+
+# 🔴 REMEDY REST API CONFIGURATION 🔴
+# Using the exact Incident endpoint from your Confluence doc
+REMEDY_REST_INCIDENT = "https://transunion-restapi.onbmc.com/api/arsys/v1/entry/HPD:IncidentInterface"
+REMEDY_REST_LOGIN = "https://transunion-restapi.onbmc.com/api/jwt/login"
+# The exact MIR3 form you discovered!
+REMEDY_REST_MIR3 = "https://transunion-restapi.onbmc.com/api/arsys/v1/entry/TU:MIR3:HPD:Escalate"
+
+
+# Your Remedy Credentials (Use your own until you get a Service Account)
+REMEDY_USERNAME = "suryakant.patil@transunion.com"
+REMEDY_PASSWORD = "Requisition@sep2026"

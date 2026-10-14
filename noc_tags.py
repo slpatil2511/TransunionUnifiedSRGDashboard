@@ -12,6 +12,7 @@ import requests
 import re
 import threading
 from plyer import notification
+import winsound
 import pandas as pd
 from bs4 import BeautifulSoup
 from streamlit.runtime.scriptrunner import add_script_run_ctx
@@ -479,7 +480,7 @@ def get_smart_mentions(system, extra_data=None):
                     None
                 )
 
-                for _, row in data.iterrows():
+                for _, row in data.iterrows():                                       
 
                     if not is_current_shift(row[shift_col]):
                         continue

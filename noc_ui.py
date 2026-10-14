@@ -15,10 +15,7 @@ import requests
 import re
 import threading
 from plyer import notification
-try:
-    import winsound
-except ImportError:
-    winsound = None
+import winsound
 import pandas as pd
 from bs4 import BeautifulSoup
 from streamlit.runtime.scriptrunner import add_script_run_ctx
@@ -395,8 +392,7 @@ def live_dashboard_fragment(sound_enabled):
             try:
                 notification.notify(title="🚨 New Alert Received", message=summary_text, app_name="Unified NOC Dashboard", timeout=10)
                 for _ in range(3):
-                    if winsound:
-                        winsound.Beep(800, 300)
+                    winsound.Beep(800, 300)
                     time.sleep(0.1)
             except Exception as e:
                 print(f"Notification failed: {e}")
@@ -612,7 +608,7 @@ def run_dashboard():
                             f"Paging incident "
                             f"{incident['incident']} "
                             f"is expiring on "
-                            f"{sla_dt:} , please create new one."
+                            f"**{sla_dt}** , please create new one."
                             
                         )
                     )
@@ -637,17 +633,12 @@ def run_dashboard():
         st.session_state.first_load_done = True
         st.session_state.is_fetching = False
 
-        import platform
+        if 'smartit_launched' not in st.session_state:
 
-        if (
-            platform.system() == "Windows"
-            and 'smartit_launched' not in st.session_state
-        ):
-        
             import subprocess
-        
+
             EDGE_PATH = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-        
+
             subprocess.Popen([
                 EDGE_PATH,
                 "--remote-debugging-port=9222",
@@ -655,7 +646,7 @@ def run_dashboard():
                 "--new-window",
                 "https://transunion-smartit.onbmc.com"
             ])
-        
+
             st.session_state.smartit_launched = True
 
     if "node" in st.query_params:
@@ -909,7 +900,7 @@ def run_dashboard():
                 perform_data_fetch()
         
     with col_toggle:
-        sound_enabled = st.toggle("🔊 Audio Alerts", value=True,
+        sound_enabled = st.toggle("🔊 Audio Alerts", value=False,
             help="Turn Off alert sound if not required.")
         auto_post_enabled = st.toggle("🤖 Auto Post Teams", value=False,
             help="When enabled, unresolved alerts will be auto-posted to Teams.")
